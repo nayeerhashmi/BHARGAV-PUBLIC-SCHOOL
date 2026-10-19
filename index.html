@@ -5,92 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Bhargav Public School, Gadi Garh, Jammu. School information and admission enquiries for Nursery to Class 10.">
 <title>Bhargav Public School | Gadi Garh, Jammu</title>
-
-/* Smooth movement throughout the website */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 100px;
-}
-
-/* Gentle entrance for the hero content */
-.hero > div:first-child {
-  animation: heroEnter 0.8s ease-out both;
-}
-
-.hero-image {
-  animation: heroEnter 1s ease-out both;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.hero-image:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 22px 45px #10264b20;
-}
-
-@keyframes heroEnter {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Sections reveal themselves while scrolling */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Cards respond to the visitor */
-.card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 15px 32px #10264b14;
-  border-color: #c9d8ed;
-}
-
-/* Buttons feel responsive */
-.btn {
-  transition: background 0.25s ease, transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 16px #d7192025;
-}
-
-/* Respect visitors who prefer less animation */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-}
-
  <style>
 :root{--navy:#10264b;--blue:#1768c5;--red:#d71920;--light:#f4f7fb;--text:#25344c}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -155,6 +69,44 @@ footer p{color:#c8d5e8;margin-top:5px}
  section.content{padding:50px 6%}
  .grid,.about-grid,.contact-grid{grid-template-columns:1fr}
  .heading h2,.about h2{font-size:28px}
+}
+   /* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gentle entrance animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Interactive buttons */
+.btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(16, 38, 75, 0.18);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .btn {
+    transition: none;
+  }
 }
 </style>
 </head>
