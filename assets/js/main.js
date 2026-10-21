@@ -10,3 +10,34 @@ document.addEventListener("DOMContentLoaded",function(){
   topButton.addEventListener("click",function(){window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});});
   updateScroll();
 });
+
+
+/* Interactive school discovery tabs */
+document.addEventListener("DOMContentLoaded",function(){
+ var tabs=Array.from(document.querySelectorAll(".explore-tab"));
+ var panels=Array.from(document.querySelectorAll(".explore-panel"));
+ function activateTab(tab,moveFocus){
+  tabs.forEach(function(t){var active=t===tab;t.classList.toggle("active",active);t.setAttribute("aria-selected",String(active));t.setAttribute("tabindex",active?"0":"-1");});
+  panels.forEach(function(p){var active=p.id===tab.dataset.panel;p.hidden=!active;p.classList.toggle("active",active);});
+  if(moveFocus)tab.focus();
+ }
+ tabs.forEach(function(tab,index){
+  tab.addEventListener("click",function(){activateTab(tab,false);});
+  tab.addEventListener("keydown",function(e){
+   if(["ArrowRight","ArrowLeft","Home","End"].indexOf(e.key)===-1)return;
+   e.preventDefault();var next=index;
+   if(e.key==="ArrowRight")next=(index+1)%tabs.length;
+   if(e.key==="ArrowLeft")next=(index+tabs.length-1)%tabs.length;
+   if(e.key==="Home")next=0;if(e.key==="End")next=tabs.length-1;
+   activateTab(tabs[next],true);
+  });
+ });
+ if(tabs.length)tabs.forEach(function(t,i){t.setAttribute("tabindex",i===0?"0":"-1");});
+ /* Keep the FAQ tidy by allowing one answer open at a time. */
+ document.querySelectorAll(".faq-item").forEach(function(item){
+  item.addEventListener("toggle",function(){
+   if(!item.open)return;
+   document.querySelectorAll(".faq-item").forEach(function(other){if(other!==item)other.open=false;});
+  });
+ });
+});

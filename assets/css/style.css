@@ -165,3 +165,42 @@ footer:before{content:"";display:block;width:54px;height:3px;background:var(--re
 .back-to-top:hover{background:var(--red)}
 @media(max-width:650px){.back-to-top{right:14px;bottom:14px;width:42px;height:42px}.hero:before{width:220px;height:220px}.card:hover,.notice:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Interactive discovery panels and parent FAQ */
+.explore-section{background:linear-gradient(180deg,#fff,#f7f9fc)}
+.explore-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 auto 22px}
+.explore-tab{border:1px solid #dce4ef;background:#fff;color:var(--navy);border-radius:999px;padding:11px 20px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .22s ease,color .22s ease,border-color .22s ease,transform .22s ease}
+.explore-tab:hover{transform:translateY(-2px);border-color:var(--blue)}
+.explore-tab.active{background:var(--navy);color:white;border-color:var(--navy);box-shadow:0 6px 18px #10264b20}
+.explore-panel{display:grid;grid-template-columns:1fr .8fr;gap:30px;align-items:center;min-height:260px;max-width:1000px;margin:0 auto;padding:clamp(24px,4vw,46px);border:1px solid #e3eaf3;border-radius:22px;background:#fff;box-shadow:0 18px 45px #10264b0b;animation:panelIn .35s var(--ease-premium)}
+.explore-panel[hidden]{display:none}
+.explore-kicker{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--red)}
+.explore-copy h3{font-size:clamp(25px,3vw,36px);line-height:1.18;letter-spacing:-.8px;color:var(--navy);margin:12px 0}
+.explore-copy p{color:#66758b;max-width:460px;margin-bottom:18px}
+.text-link{display:inline-flex;gap:9px;align-items:center;font-weight:700;color:var(--blue);font-size:14px}
+.text-link span{transition:transform .2s ease}
+.text-link:hover span{transform:translate(3px,-3px)}
+.explore-art{min-height:185px;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:22px;overflow:hidden;position:relative}
+.explore-art span{display:grid;place-items:center;padding:17px 19px;border-radius:14px;background:#ffffffdb;color:var(--navy);font-size:16px;font-weight:900;box-shadow:0 8px 22px #10264b10;transform:rotate(-4deg);transition:transform .3s ease}
+.explore-art span:nth-child(2){transform:rotate(5deg) translateY(12px)}
+.explore-art span:nth-child(3){transform:rotate(-2deg) translateY(-10px)}
+.explore-panel:hover .explore-art span{transform:translateY(-4px) rotate(0)}
+.learning-art{background:radial-gradient(circle at 20% 25%,#fff 0 6%,transparent 7%),linear-gradient(135deg,#e3edff,#f7e7e8)}
+.life-art{background:radial-gradient(circle at 80% 25%,#fff 0 7%,transparent 8%),linear-gradient(135deg,#e1f2e9,#e3edff)}
+.parent-art{background:radial-gradient(circle at 30% 80%,#fff 0 7%,transparent 8%),linear-gradient(135deg,#fce8e6,#e8eefa)}
+.faq-section{background:#f4f7fb}
+.faq-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,6vw,80px);max-width:1100px;margin:auto;align-items:start}
+.faq-intro h2{font-size:clamp(30px,4vw,42px);line-height:1.15;letter-spacing:-1px;color:var(--navy);margin:10px 0 15px}
+.faq-intro p{color:#66758b;margin-bottom:22px}
+.faq-list{border-top:1px solid #dce4ef}
+.faq-item{border-bottom:1px solid #dce4ef;padding:0 4px}
+.faq-item summary{list-style:none;cursor:pointer;padding:19px 34px 19px 0;position:relative;color:var(--navy);font-weight:700}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:24px;font-weight:400;color:var(--red);transition:transform .2s ease}
+.faq-item[open] summary:after{content:"−"}
+.faq-item p{color:#66758b;font-size:14px;padding:0 24px 16px 0}
+.faq-item .text-link{margin:0 0 18px}
+@keyframes panelIn{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.explore-panel,.faq-layout{grid-template-columns:1fr}.explore-art{min-height:145px}.faq-intro{max-width:540px}.explore-tabs{justify-content:stretch}.explore-tab{flex:1;padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.explore-panel{animation:none}.explore-tab,.explore-art span,.text-link span{transition:none}}
