@@ -105,3 +105,24 @@ html {
 @media(max-width:980px){header{position:sticky;flex-wrap:wrap}.menu-toggle{display:block}nav{display:none;width:100%;flex-direction:column;align-items:stretch;overflow:visible;gap:4px}nav.open{display:flex}.nav-item{width:100%}.dropdown{position:static;box-shadow:none;border-top:1px solid #e6ebf2;padding-left:12px}.slider,.slide img{height:280px;min-height:280px}}
 @media(max-width:650px){.slider,.slide img{height:245px;min-height:245px}.brand h2{font-size:15px}.logo{width:50px;height:50px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.btn,.card,.slide{transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Desktop navigation layout inspired by the supplied reference */
+@media(min-width:981px){
+ header{display:flex;flex-wrap:wrap;align-items:center;gap:0;padding:14px 3% 0}
+ header .brand{flex:1 1 100%;padding-bottom:14px}
+ header .logo{width:76px;height:76px}
+ header .brand h2{font-size:21px}
+ header .brand small{font-size:13px}
+ header .menu-toggle{display:none}
+ header nav{display:flex;width:100%;justify-content:space-between;align-items:stretch;gap:0;overflow:visible;padding:0 0 0;border-top:1px solid #e9edf3;font-size:16px}
+ header nav>a,header nav>.nav-item{display:flex;align-items:center;justify-content:center;padding:13px 12px;white-space:nowrap}
+ header nav .nav-trigger{padding:13px 0;font-weight:600}
+ header nav>a.btn{margin:7px 0;padding:11px 16px}
+ header nav>a:hover,header nav .nav-trigger:hover{color:var(--red)}
+ header nav .dropdown{top:100%;left:0;min-width:245px}
+}
+@media(min-width:981px) and (max-width:1150px){
+ header{padding-left:2%;padding-right:2%}
+ header nav{font-size:14px}
+ header nav>a,header nav>.nav-item{padding-left:7px;padding-right:7px}
+}
