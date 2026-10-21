@@ -5,110 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Bhargav Public School, Gadi Garh, Jammu. School information and admission enquiries for Nursery to Class 10.">
 <title>Bhargav Public School | Gadi Garh, Jammu</title>
- <style>
-:root{--navy:#10264b;--blue:#1768c5;--red:#d71920;--light:#f4f7fb;--text:#25344c}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.65}
-a{text-decoration:none;color:inherit}
-.top{background:var(--navy);color:white;text-align:center;padding:9px 16px;font-size:13px}
-header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 6%;background:white;position:sticky;top:0;z-index:5;box-shadow:0 3px 16px #10264b12}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:65px;height:65px;object-fit:contain}
-.brand h2{font-size:17px;line-height:1.3;color:var(--navy)}
-.brand small{font-size:12px;color:#66758b}
-nav{display:flex;align-items:center;gap:20px;font-size:14px}
-nav a:hover{color:var(--red)}
-.btn{display:inline-block;border:0;border-radius:7px;padding:12px 18px;background:var(--red);color:white;font-weight:bold;cursor:pointer}
-.btn:hover{background:#b81219}
-.hero{padding:75px 7%;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;background:linear-gradient(120deg,#f2f6fc,#fff)}
-.eyebrow{color:var(--red);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
-.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.12;letter-spacing:-1.5px;color:var(--navy);margin:14px 0}
-.hero h1 span{color:var(--red)}
-.hero p{color:#5e6d83;margin-bottom:24px;max-width:550px}
-.hero-image{background:white;border:1px solid #e7eaf0;border-radius:20px;padding:24px;text-align:center;box-shadow:0 15px 40px #10264b12}
-.hero-image img{width:100%;max-width:360px;max-height:310px;object-fit:contain}
-.hero-image p{margin:12px 0 0;font-weight:bold;color:var(--navy)}
-.strip{background:var(--navy);color:white;display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;padding:25px 6%}
-.strip strong{display:block;font-size:18px}.strip span{font-size:12px;color:#d1dced}
-section.content{padding:70px 7%}
-.heading{text-align:center;max-width:700px;margin:0 auto 35px}
-.heading h2{font-size:32px;color:var(--navy);margin:8px 0}
-.heading p{color:#66758b}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{padding:25px;border:1px solid #e4eaf2;border-radius:14px;background:white}
-.card .icon{font-size:30px}
-.card h3{margin:10px 0;color:var(--navy)}
-.card p{font-size:14px;color:#66758b}
-.about{background:var(--light)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.about h2{font-size:32px;color:var(--navy);line-height:1.25;margin:10px 0 16px}
-.about p{color:#66758b;margin-bottom:12px}
-.notice{border-left:4px solid var(--red);padding:18px 20px;background:#fff;border-radius:8px;margin-bottom:14px}
-.notice h3{color:var(--navy);font-size:17px}
-.notice p{font-size:14px;color:#66758b;margin-top:5px}
-.contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:28px;align-items:start}
-.contact-info{background:var(--navy);color:white;padding:27px;border-radius:15px}
-.contact-info h3{font-size:22px;margin-bottom:12px}
-.contact-info p{font-size:14px;color:#d6e1f0;margin:12px 0;overflow-wrap:anywhere}
-.contact-info a{text-decoration:underline}
-form{border:1px solid #e2e8f0;border-radius:15px;padding:26px}
-label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:7px;margin-bottom:15px;font:inherit}
-textarea{min-height:110px;resize:vertical}
-.small{font-size:12px;color:#6a778b;margin-top:12px}
-footer{background:#09182f;color:white;text-align:center;padding:27px 6%;font-size:13px}
-footer p{color:#c8d5e8;margin-top:5px}
-@media(max-width:800px){
- header{padding:12px 5%;flex-wrap:wrap}
- nav{width:100%;gap:15px;overflow-x:auto;padding:5px 0}
- nav a{white-space:nowrap}
- .hero{grid-template-columns:1fr;padding:48px 6%;gap:25px}
- .strip{padding:20px 4%;gap:8px}
- .strip strong{font-size:15px}
- section.content{padding:50px 6%}
- .grid,.about-grid,.contact-grid{grid-template-columns:1fr}
- .heading h2,.about h2{font-size:28px}
-}
-   /* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
+ <link rel="stylesheet" href="assets/css/style.css">
+ <script src="assets/js/main.js" defer></script>
 
-/* Gentle entrance animation */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Interactive buttons */
-.btn {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(16, 38, 75, 0.18);
-}
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .reveal,
-  .btn {
-    transition: none;
-  }
-}
-</style>
 </head>
 <body>
 <div class="top">BHARGAV PUBLIC SCHOOL · GADI GARH, JAMMU</div>
@@ -117,10 +16,7 @@ html {
 <img class="logo" src="bhargav-logo.png" alt="Bhargav Public School logo">
 <div><h2>Bhargav Public School</h2><small>Education Is Liberation</small></div>
 </a>
-<nav>
-<a href="#home">Home</a><a href="#about">About</a><a href="#academics">Academics</a><a href="#notices">Notices</a><a href="#contact">Contact</a>
-<a class="btn" href="#contact">Admission Enquiry</a>
-</nav>
+<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button><nav><a href="#home">Home</a><div class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false">School ▼</button><div class="dropdown"><a href="pages/school/about-us.html">About Us</a><a href="pages/school/vision-and-mission.html">Vision and Mission</a><a href="pages/school/managing-committee.html">Managing Committee</a><a href="pages/school/student-council.html">Student Council</a><a href="pages/school/counselling.html">Counselling</a><a href="pages/school/guest-book.html">Guest Book</a><a href="pages/school/privacy-policy.html">Privacy Policy</a><a href="pages/school/school-philosophy.html">School Philosophy</a></div></div><a href="#academics">Academics</a><a href="#facilities">Facilities</a><a href="#notices">Notices</a><a href="#contact">Contact</a><a class="btn" href="#contact">Admission Enquiry</a></nav>
 </header>
 
 <main>
@@ -131,10 +27,7 @@ html {
 <p>Bhargav Public School is a private school in Gadi Garh, Jammu, committed to quality education and the all round development of children.</p>
 <a class="btn" href="#contact">Enquire About Admission →</a>
 </div>
-<div class="hero-image">
-<img src="bhargav-logo.png" alt="Official Bhargav Public School emblem">
-<p>Education Is Liberation</p>
-</div>
+<div class="slider" aria-label="School photo slideshow"><div class="slider-track"></div><div class="slider-controls"><button class="slider-prev" type="button" aria-label="Previous photo">‹</button><button class="slider-next" type="button" aria-label="Next photo">›</button></div><div class="slider-dots"></div></div>
 </section>
 
 <div class="strip">
@@ -173,7 +66,7 @@ html {
 <div class="card"><div class="icon">🎓</div><h3>Middle and Secondary</h3><p>Classes 6 to 10.</p></div>
 </div>
 </section>
-
+<section class="content" id="facilities"><div class="heading"><div class="eyebrow">School facilities</div><h2>Spaces to learn and grow</h2><p>Explore the learning and activity spaces listed by the school.</p></div><div class="grid"><div class="card"><div class="icon">📘</div><h3>Classroom Teaching</h3><p>Supporting students through classroom learning.</p></div><div class="card"><div class="icon">⚽</div><h3>Playground and Sports</h3><p>Opportunities for movement, play and teamwork.</p></div><div class="card"><div class="icon">💻</div><h3>Computer Lab</h3><p>Computer learning and digital skills.</p></div></div></section>
 <section class="content" id="notices">
 <div class="heading">
 <div class="eyebrow">School information</div>
