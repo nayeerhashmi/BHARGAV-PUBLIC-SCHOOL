@@ -5,24 +5,4 @@
 <main><section class="page-hero"><div class="eyebrow">Read and learn</div><h1>Guest Book and E-Book Library</h1><p>A growing collection of e-books and learning resources for students of Bhargav Public School.</p></section>
 <section class="page-body"><div class="heading"><div class="eyebrow">Student resources</div><h2>Explore the library</h2><p>We will add books here as they are uploaded. Select a book to open or download it.</p></div><div class="grid" id="ebookLibrary"><div class="card ebook-empty"><div class="icon">📚</div><h3>Books are coming soon</h3><p>The e-book collection is being prepared. Please check back soon.</p></div></div><p class="small" style="text-align:center;margin-top:24px">Teachers and administrators can add PDF e-books to the <code>ebooks</code> folder in the website's GitHub repository. Each book can then be added to this library page.</p></section>
 <footer><strong>Bhargav Public School · Gadi Garh, Jammu</strong><p>Education Is Liberation</p><p>© <span id="year"></span> Bhargav Public School</p></footer>
-<script>
-document.addEventListener("DOMContentLoaded",function(){
-const form=document.getElementById("feedbackForm"),phone=document.getElementById("feedbackPhone"),otp=document.getElementById("feedbackOtp"),step=document.getElementById("otpStep"),send=document.getElementById("sendOtp"),submit=document.getElementById("submitFeedback"),status=document.getElementById("feedbackStatus");
-let otpRequested=false;
-function setStatus(msg,error){status.textContent=msg;status.style.color=error?"#b81219":"#52657c";}
-send.addEventListener("click",async function(){
-const number=phone.value.trim();if(!/^[6-9]\d{9}$/.test(number)){setStatus("Enter a valid 10-digit Indian mobile number first.",true);phone.focus();return;}
-send.disabled=true;setStatus("Requesting verification code…");
-try{const r=await fetch("../../api/feedback/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:"+91"+number})});const d=await r.json();if(!r.ok)throw new Error(d.error||"Could not send OTP.");otpRequested=true;step.hidden=false;otp.required=true;submit.disabled=false;setStatus("If the number is valid, an SMS verification code has been requested. Check your messages.");otp.focus();}
-catch(e){setStatus(e.message||"OTP service is not configured yet.",true);}
-finally{send.disabled=false;}
-});
-form.addEventListener("submit",async function(e){e.preventDefault();if(!otpRequested){setStatus("Please request an OTP before submitting feedback.",true);return;}
-submit.disabled=true;setStatus("Verifying code and submitting feedback…");
-try{const body={name:form.name.value.trim(),phone:"+91"+phone.value.trim(),otp:otp.value.trim(),type:form.type.value,message:form.message.value.trim()};const r=await fetch("../../api/feedback/verify-submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw new Error(d.error||"Could not submit feedback.");form.reset();step.hidden=true;otpRequested=false;submit.disabled=true;setStatus("Thank you. Your feedback was verified and submitted successfully.");}
-catch(e){setStatus(e.message||"Verification failed. Check the code and try again.",true);}
-finally{if(otpRequested)submit.disabled=false;}
-});
-phone.addEventListener("input",function(){otpRequested=false;step.hidden=true;otp.required=false;otp.value="";submit.disabled=true;});
-});
-</script></body></html>
+</body></html>
