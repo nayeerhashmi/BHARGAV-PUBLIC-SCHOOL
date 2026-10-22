@@ -1,10 +1,14 @@
 [
   {
     "title": "English 5th",
-    "file": "English 5th.pdf"
+    "file": "English 5th.pdf",
+    "class": "",
+    "subject": "English"
   },
   {
     "title": "MerryMath 5th",
-    "file": "MerryMath 5th.pdf"
+    "file": "MerryMath 5th.pdf",
+    "class": "",
+    "subject": "Mathematics"
   }
 ]
