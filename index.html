@@ -118,9 +118,9 @@
 
 <section class="content about" id="contact">
 <div class="heading">
-<div class="eyebrow">Admissions and enquiries</div>
-<h2>Contact Bhargav Public School</h2>
-<p>For admission enquiries and school information, contact the principal or send an enquiry below.</p>
+<div class="eyebrow">Your voice matters</div>
+<h2>Share Your Feedback</h2>
+<p>Verify your mobile number by SMS, then send an appreciation, suggestion or concern to the school.</p>
 </div>
 <div class="contact-grid">
 <div class="contact-info">
@@ -132,45 +132,7 @@
 <p>✉ <a href="mailto:vikas.sharma7010@gmail.com">vikas.sharma7010@gmail.com</a></p>
 <a class="btn" href="https://wa.me/916005533018">Contact on WhatsApp</a>
 </div>
-<form id="admissionForm">
-<label for="parent">Parent or guardian name</label>
-<input id="parent" name="parent" required placeholder="Enter your name">
-<label for="student">Student name</label>
-<input id="student" name="student" required placeholder="Enter student's name">
-<label for="class">Class seeking admission</label>
-<select id="class" name="class" required>
-<option value="">Choose a class</option>
-<option>Nursery</option><option>LKG</option><option>UKG</option>
-<option>Class 1</option><option>Class 2</option><option>Class 3</option>
-<option>Class 4</option><option>Class 5</option><option>Class 6</option>
-<option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
-</select>
-<label for="phone">Contact phone number</label>
-<input id="phone" name="phone" type="tel" required placeholder="Enter your phone number">
-<label for="message">Your enquiry</label>
-<textarea id="message" name="message" required placeholder="Tell us how the school can help"></textarea>
-<button class="btn" type="submit">Prepare Enquiry</button>
-<p class="small" id="formStatus" aria-live="polite">This form is not connected to email yet. Use the phone or email above until it is activated.</p>
-</form>
-</div>
-</section>
-
-<section class="content about" id="feedback">
-  <div class="heading">
-    <div class="eyebrow">Your voice matters</div>
-    <h2>Feedback and Guest Book</h2>
-    <p>Share an appreciation, suggestion or concern with Bhargav Public School. Verify your Indian mobile number by SMS before submitting.</p>
-  </div>
-  <div class="contact-grid">
-    <div class="contact-info">
-      <h3>Help us improve</h3>
-      <p>1. Enter your name and mobile number.</p>
-      <p>2. Request an SMS verification code and enter it in the OTP field.</p>
-      <p>3. Complete your feedback and submit it after verification.</p>
-      <p>Your feedback is saved only after the SMS code is verified successfully.</p>
-      <p><a href="pages/school/privacy-policy.html">Read our privacy policy</a></p>
-    </div>
-    <form id="homeFeedbackForm">
+<form id="homeFeedbackForm">
       <label for="homeFeedbackName">Your name</label>
       <input id="homeFeedbackName" name="name" maxlength="80" autocomplete="name" required placeholder="Enter your name">
       <label for="homeFeedbackPhone">Mobile number</label>
@@ -190,8 +152,10 @@
       <button class="btn" id="homeSubmitFeedback" type="submit" disabled>Verify OTP and submit</button>
       <p class="small" id="homeFeedbackStatus" role="status" aria-live="polite">SMS verification will work after the SMS provider credentials and database are configured in Cloudflare.</p>
     </form>
-  </div>
+</div>
 </section>
+
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("homeFeedbackForm");
