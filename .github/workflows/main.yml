@@ -1,0 +1,56 @@
+
+name: Update E-book Catalogue
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ebooks/*.pdf"
+      - "ebooks/*.PDF"
+      - ".github/workflows/main.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-catalogue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get website files
+        uses: actions/checkout@v4
+
+      - name: Generate catalogue
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          folder = Path("ebooks")
+          books = []
+
+          for path in sorted(folder.iterdir(), key=lambda p: p.name.lower()):
+              if path.is_file() and path.suffix.lower() == ".pdf":
+                  books.append({
+                      "title": path.stem.replace("_", " ").replace("-", " "),
+                      "file": path.name
+                  })
+
+          Path("ebooks/catalogue.json").write_text(
+              json.dumps(books, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+          print(f"Found {len(books)} PDF book(s).")
+          PY
+
+      - name: Save catalogue
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ebooks/catalogue.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update e-book catalogue"
+            git push
+          fi
