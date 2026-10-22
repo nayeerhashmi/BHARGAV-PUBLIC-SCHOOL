@@ -16,7 +16,7 @@
 <img class="logo" src="bhargav-logo.png" alt="Bhargav Public School logo">
 <div><h2>Bhargav Public School</h2><small>Education Is Liberation</small></div>
 </a>
-<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button><nav><a href="#home">Home</a><div class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false">School ▼</button><div class="dropdown"><a href="pages/school/about-us.html">About Us</a><a href="pages/school/vision-and-mission.html">Vision and Mission</a><a href="pages/school/managing-committee.html">Managing Committee</a><a href="pages/school/student-council.html">Student Council</a><a href="pages/school/counselling.html">Counselling</a><a href="pages/school/guest-book.html">Guest Book</a><a href="pages/school/privacy-policy.html">Privacy Policy</a><a href="pages/school/school-philosophy.html">School Philosophy</a></div></div><a href="#academics">Academics</a><a href="pages/calendar/index.html">Calendar</a><a href="#facilities">Facilities</a><a href="#notices">Notices</a><a href="#contact">Contact</a><a class="btn" href="#contact">Admission Enquiry</a></nav>
+<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button><nav><a href="#home">Home</a><div class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false">School ▼</button><div class="dropdown"><a href="pages/school/about-us.html">About Us</a><a href="pages/school/vision-and-mission.html">Vision and Mission</a><a href="pages/school/managing-committee.html">Managing Committee</a><a href="pages/school/student-council.html">Student Council</a><a href="pages/school/counselling.html">Counselling</a><a href="pages/school/guest-book.html">Guest Book</a><a href="pages/school/privacy-policy.html">Privacy Policy</a><a href="pages/school/school-philosophy.html">School Philosophy</a></div></div><a href="#academics">Academics</a><a href="pages/calendar/index.html">Calendar</a><a href="#facilities">Facilities</a><a href="#notices">Notices</a><a href="#contact">Contact</a><a href="#feedback">Feedback</a><a class="btn" href="#contact">Admission Enquiry</a></nav>
 </header>
 
 <main>
@@ -154,6 +154,132 @@
 </form>
 </div>
 </section>
+
+<section class="content about" id="feedback">
+  <div class="heading">
+    <div class="eyebrow">Your voice matters</div>
+    <h2>Feedback and Guest Book</h2>
+    <p>Share an appreciation, suggestion or concern with Bhargav Public School. Verify your Indian mobile number by SMS before submitting.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Help us improve</h3>
+      <p>1. Enter your name and mobile number.</p>
+      <p>2. Request an SMS verification code and enter it in the OTP field.</p>
+      <p>3. Complete your feedback and submit it after verification.</p>
+      <p>Your feedback is saved only after the SMS code is verified successfully.</p>
+      <p><a href="pages/school/privacy-policy.html">Read our privacy policy</a></p>
+    </div>
+    <form id="homeFeedbackForm">
+      <label for="homeFeedbackName">Your name</label>
+      <input id="homeFeedbackName" name="name" maxlength="80" autocomplete="name" required placeholder="Enter your name">
+      <label for="homeFeedbackPhone">Mobile number</label>
+      <div class="phone-row"><span>+91</span><input id="homeFeedbackPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" pattern="[6-9][0-9]{9}" maxlength="10" required placeholder="10-digit Indian mobile number"></div>
+      <button class="btn" id="homeSendOtp" type="button">Send OTP</button>
+      <div id="homeOtpStep" hidden>
+        <label for="homeFeedbackOtp">Enter OTP</label>
+        <input id="homeFeedbackOtp" name="otp" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4,8}" maxlength="8" placeholder="Enter the SMS code">
+        <p class="small">Enter the code sent to your phone. Do not share it with anyone.</p>
+      </div>
+      <label for="homeFeedbackType">Feedback type</label>
+      <select id="homeFeedbackType" name="type" required>
+        <option value="">Choose a category</option><option>Appreciation</option><option>Suggestion</option><option>Concern</option><option>General feedback</option>
+      </select>
+      <label for="homeFeedbackMessage">Your feedback</label>
+      <textarea id="homeFeedbackMessage" name="message" minlength="5" maxlength="2000" required placeholder="Write your feedback here"></textarea>
+      <button class="btn" id="homeSubmitFeedback" type="submit" disabled>Verify OTP and submit</button>
+      <p class="small" id="homeFeedbackStatus" role="status" aria-live="polite">SMS verification will work after the SMS provider credentials and database are configured in Cloudflare.</p>
+    </form>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("homeFeedbackForm");
+  if (!form) return;
+  const phone = document.getElementById("homeFeedbackPhone");
+  const otp = document.getElementById("homeFeedbackOtp");
+  const step = document.getElementById("homeOtpStep");
+  const send = document.getElementById("homeSendOtp");
+  const submit = document.getElementById("homeSubmitFeedback");
+  const status = document.getElementById("homeFeedbackStatus");
+  let otpRequested = false;
+  function setStatus(message, error) {
+    status.textContent = message;
+    status.style.color = error ? "#b81219" : "#52657c";
+  }
+  send.addEventListener("click", async function () {
+    const number = phone.value.trim();
+    if (!/^[6-9][0-9]{9}$/.test(number)) {
+      setStatus("Enter a valid 10-digit Indian mobile number first.", true);
+      phone.focus();
+      return;
+    }
+    send.disabled = true;
+    setStatus("Requesting SMS verification code…");
+    try {
+      const response = await fetch("api/feedback/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: "+91" + number })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not send OTP.");
+      otpRequested = true;
+      step.hidden = false;
+      otp.required = true;
+      submit.disabled = false;
+      setStatus("Verification code requested. Check your SMS messages.");
+      otp.focus();
+    } catch (error) {
+      setStatus(error.message || "OTP service is not configured yet.", true);
+    } finally {
+      send.disabled = false;
+    }
+  });
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    if (!otpRequested) {
+      setStatus("Please request an OTP before submitting feedback.", true);
+      return;
+    }
+    submit.disabled = true;
+    setStatus("Verifying code and submitting feedback…");
+    try {
+      const body = {
+        name: form.elements.name.value.trim(),
+        phone: "+91" + phone.value.trim(),
+        otp: otp.value.trim(),
+        type: form.elements.type.value,
+        message: form.elements.message.value.trim()
+      };
+      const response = await fetch("api/feedback/verify-submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not submit feedback.");
+      form.reset();
+      step.hidden = true;
+      otpRequested = false;
+      submit.disabled = true;
+      setStatus("Thank you. Your mobile number was verified and your feedback was submitted.");
+    } catch (error) {
+      setStatus(error.message || "Verification failed. Check the code and try again.", true);
+    } finally {
+      if (otpRequested) submit.disabled = false;
+    }
+  });
+  phone.addEventListener("input", function () {
+    otpRequested = false;
+    step.hidden = true;
+    otp.required = false;
+    otp.value = "";
+    submit.disabled = true;
+  });
+});
+</script>
+
 </main>
 
 <footer>
