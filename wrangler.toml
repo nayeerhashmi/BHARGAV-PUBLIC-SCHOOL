@@ -5,5 +5,5 @@ compatibility_date = "2026-10-22"
 [[d1_databases]]
 binding = "FEEDBACK_DB"
 database_name = "bhargav-school-feedback"
-database_id = "REPLACE_WITH_YOUR_CLOUDFLARE_D1_DATABASE_ID"
+database_id = "8e5740ba-0afd-406f-af72-be8123a67325"
 migrations_dir = "migrations"
