@@ -1,0 +1,71 @@
+
+name: Update E-book Catalogue
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ebooks/*.pdf"
+      - "ebooks/*.PDF"
+      - ".github/workflows/main.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-catalogue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get website files
+        uses: actions/checkout@v4
+
+      - name: Generate catalogue
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          folder = Path("ebooks")
+          books = []
+          subjects = ["English", "Mathematics", "Maths", "Science", "Social Science", "SST", "Hindi", "Urdu", "Computer", "EVS"]
+
+          for path in sorted(folder.iterdir(), key=lambda p: p.name.lower()):
+              if not path.is_file() or path.suffix.lower() != ".pdf":
+                  continue
+              title = path.stem.replace("_", " ").replace("-", " ").strip()
+              match = re.search(r"(?i)\b(?:class\s*)?(nursery|lkg|ukg|[1-9]|10|11|12)(?:st|nd|rd|th)?\b", title)
+              class_name = ""
+              if match:
+                  value = match.group(1).upper()
+                  class_name = value if value in ("NURSERY", "LKG", "UKG") else "Class " + value
+              subject = ""
+              for candidate in subjects:
+                  if re.search(r"(?i)\b" + re.escape(candidate) + r"\b", title):
+                      subject = "Mathematics" if candidate.lower() == "maths" else ("Social Science" if candidate.lower() == "sst" else candidate)
+                      break
+              books.append({
+                  "title": title,
+                  "file": path.name,
+                  "class": class_name,
+                  "subject": subject
+              })
+
+          Path("ebooks/catalogue.json").write_text(
+              json.dumps(books, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+          print(f"Found {len(books)} PDF book(s).")
+
+      - name: Save catalogue
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ebooks/catalogue.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update e-book catalogue"
+            git push
+          fi

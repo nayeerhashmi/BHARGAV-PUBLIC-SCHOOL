@@ -1,0 +1,9 @@
+name = "bhargav-public-school"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-22"
+
+[[d1_databases]]
+binding = "FEEDBACK_DB"
+database_name = "bhargav-public-school"
+database_id = "8e5740ba-0afd-406f-af72-be8123a67325"
+migrations_dir = "migrations"

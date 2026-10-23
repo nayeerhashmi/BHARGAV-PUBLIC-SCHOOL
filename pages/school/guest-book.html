@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Browse educational e-books and learning resources for Bhargav Public School students."><title>Guest Book and E-Book Library | Bhargav Public School</title><link rel="stylesheet" href="../../assets/css/style.css"><script src="../../assets/js/main.js" defer></script><style>
+.library-tools{max-width:900px;margin:0 auto 28px;padding:22px;border:1px solid var(--line,#e2e8f0);border-radius:16px;background:var(--card,#fff)}
+.library-tools label{display:block;font-weight:600;margin:0 0 8px}
+.library-tools input,.library-tools select{box-sizing:border-box;width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#172033;font:inherit}
+.library-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+#bookCount{margin:14px 0 0}
+.ebook-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.ebook-card .btn{margin-top:8px}
+.ebook-card .small{margin:4px 0 0}
+.ebook-meta{display:flex;flex-wrap:wrap;gap:6px}
+.ebook-tag{font-size:.8rem;padding:4px 9px;border-radius:999px;background:#edf2f7;color:#334155}
+@media(max-width:600px){.library-filters{grid-template-columns:1fr}.library-tools{padding:16px}}
+</style>
+</head>
+<body><div class="top">BHARGAV PUBLIC SCHOOL · GADI GARH, JAMMU</div>
+<header><a class="brand" href="../../index.html"><img class="logo" src="../../bhargav-logo.png" alt="School logo"><div><h2>Bhargav Public School</h2><small>Education Is Liberation</small></div></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="../../index.html">Home</a><div class="nav-item"><button class="nav-trigger" type="button" aria-expanded="false">School ▼</button><div class="dropdown"><a href="about-us.html">About Us</a><a href="vision-and-mission.html">Vision and Mission</a><a href="managing-committee.html">Managing Committee</a><a href="student-council.html">Student Council</a><a href="counselling.html">Counselling</a><a href="guest-book.html">Guest Book</a><a href="privacy-policy.html">Privacy Policy</a><a href="school-philosophy.html">School Philosophy</a></div></div><a href="../../index.html#academics">Academics</a><a href="../calendar/index.html">Calendar</a><a href="../../index.html#facilities">Facilities</a><a href="../../index.html#notices">Notices</a><a href="../../index.html#contact">Contact</a><a href="../../index.html#feedback">Feedback</a><a class="btn" href="../../index.html#contact">Admission Enquiry</a></nav></header>
+<main><section class="page-hero"><div class="eyebrow">Read and learn</div><h1>Guest Book and E-Book Library</h1><p>A growing collection of e-books and learning resources for students of Bhargav Public School.</p></section>
+<section class="page-body">
+<div class="heading"><div class="eyebrow">Student resources</div><h2>Explore the library</h2><p>Search e-books or filter by class and subject. New PDFs appear after the catalogue workflow completes.</p></div>
+<div class="library-tools">
+  <label for="bookSearch">Search books</label>
+  <input id="bookSearch" type="search" placeholder="Search by book title or filename">
+  <div class="library-filters">
+    <div><label for="classFilter">Class</label><select id="classFilter"><option value="all">All classes</option></select></div>
+    <div><label for="subjectFilter">Subject</label><select id="subjectFilter"><option value="all">All subjects</option></select></div>
+  </div>
+  <p class="small" id="bookCount" aria-live="polite">Loading e-books…</p>
+</div>
+<div class="grid" id="ebookLibrary"><div class="card ebook-empty"><div class="icon">📚</div><h3>Loading books…</h3><p>Fetching the latest e-book catalogue.</p></div></div>
+</section>
+<footer><strong>Bhargav Public School · Gadi Garh, Jammu</strong><p>Education Is Liberation</p><p>© <span id="year"></span> Bhargav Public School</p></footer>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const library = document.getElementById("ebookLibrary");
+  const search = document.getElementById("bookSearch");
+  const classFilter = document.getElementById("classFilter");
+  const subjectFilter = document.getElementById("subjectFilter");
+  const count = document.getElementById("bookCount");
+  let books = [];
+  function addOptions(select, values) {
+    [...new Set(values.filter(Boolean))].sort((a,b)=>a.localeCompare(b)).forEach(value => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+  }
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const cls = classFilter.value;
+    const subject = subjectFilter.value;
+    const shown = books.filter(book =>
+      (cls === "all" || book.class === cls) &&
+      (subject === "all" || book.subject === subject) &&
+      (!q || (book.title + " " + book.file + " " + (book.subject || "") + " " + (book.class || "")).toLowerCase().includes(q))
+    );
+    library.replaceChildren();
+    count.textContent = shown.length + (shown.length === 1 ? " book shown" : " books shown") + " · " + books.length + " total";
+    if (!shown.length) {
+      const empty = document.createElement("div");
+      empty.className = "card ebook-empty";
+      const h = document.createElement("h3");
+      h.textContent = books.length ? "No matching books" : "No books yet";
+      const p = document.createElement("p");
+      p.textContent = books.length ? "Try another search or filter." : "New student e-books will appear here after they are uploaded.";
+      empty.append(h,p); library.appendChild(empty); return;
+    }
+    shown.forEach(book => {
+      const card = document.createElement("article"); card.className = "card ebook-card";
+      const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = "📘";
+      const title = document.createElement("h3"); title.textContent = book.title || book.file;
+      const desc = document.createElement("p"); desc.textContent = "Student e-book in PDF format.";
+      const meta = document.createElement("div"); meta.className = "ebook-meta";
+      [book.class,book.subject].filter(Boolean).forEach(value => { const tag=document.createElement("span");tag.className="ebook-tag";tag.textContent=value;meta.appendChild(tag);});
+      const url = "../../ebooks/" + encodeURIComponent(book.file);
+      const open = document.createElement("a"); open.className="btn"; open.href=url; open.target="_blank"; open.rel="noopener"; open.textContent="Open e-book ↗";
+      const downloadWrap=document.createElement("p");downloadWrap.className="small";
+      const download=document.createElement("a");download.href=url;download.setAttribute("download",book.file);download.textContent="Download PDF";downloadWrap.appendChild(download);
+      card.append(icon,title,desc,meta,open,downloadWrap);library.appendChild(card);
+    });
+  }
+  try {
+    const response=await fetch("../../ebooks/catalogue.json",{cache:"no-store"});
+    if(!response.ok) throw new Error("Catalogue unavailable");
+    books=await response.json();
+    addOptions(classFilter,books.map(book=>book.class));
+    addOptions(subjectFilter,books.map(book=>book.subject));
+    [search,classFilter,subjectFilter].forEach(control=>control.addEventListener(control===search?"input":"change",render));
+    render();
+  } catch(error) {
+    library.innerHTML='<div class="card ebook-empty"><div class="icon">📚</div><h3>Library temporarily unavailable</h3><p>Please refresh this page in a moment.</p></div>';
+    count.textContent="Could not load the e-book catalogue.";
+  }
+});
+</script>
+</body></html>
