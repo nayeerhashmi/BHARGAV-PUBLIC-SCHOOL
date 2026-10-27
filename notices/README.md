@@ -1,12 +1,27 @@
-# School Notices
+# School notices
 
-Upload school notice files to this folder.
+This folder stores approved notices for the Bhargav Public School website.
 
-## How to add a notice
+## Publish a notice
 
-1. Upload the notice as a PDF or image into this folder.
-2. Use a clear filename that includes the notice topic and date, for example `unit-test-notice-2026-11-05.pdf`.
-3. Do not upload student personal information unless the school has approved it for public release.
-4. To make a notice visible on the website, add its title, date, short description and file link to the Notices page at `pages/notices.html`.
+1. Upload the PDF or image into `notices/files/`.
+2. Open `notices/notices.json` and add an entry to the JSON array. Example:
 
-Files placed here are stored in the repository. Uploading a file to this folder alone does not automatically publish it on the Notices page.
+```json
+{
+  "title": "Annual examination timetable",
+  "date": "2026-11-05",
+  "description": "Timetable for Classes 1 to 10.",
+  "file": "/notices/files/annual-examination-timetable.pdf"
+}
+```
+
+3. Commit the changes to `main` after reviewing them. Cloudflare Pages publishes the files after deployment completes.
+
+The date is optional and should use YYYY-MM-DD. The file attachment is optional. Notices are shown on the website when the JSON entry is valid.
+
+## Safety
+
+- Publish only notices approved by the school.
+- Do not upload private student information, marksheets, phone numbers, or confidential records.
+- Public files in this repository can be viewed by anyone.
