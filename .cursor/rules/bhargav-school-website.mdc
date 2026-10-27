@@ -1,0 +1,33 @@
+---
+description: "Project rules for the Bhargav Public School static website and Cloudflare Pages deployment"
+globs: ["**/*.html", "**/*.css", "**/*.js", "wrangler.toml", ".github/workflows/*.yml"]
+alwaysApply: true
+---
+
+# Bhargav Public School website rules
+
+## Project setup
+- This is an existing static HTML, CSS and JavaScript website deployed to Cloudflare Pages.
+- The Pages output directory is the repository root, configured in wrangler.toml. Do not change it without checking the deployment configuration.
+- Shared styles live in assets/css/style.css. Shared browser scripts live in assets/js/main.js. The school logo is bhargav-logo.png.
+- Cloudflare Pages Functions live in functions/. The feedback API uses the FEEDBACK_DB D1 binding and migrations in migrations/.
+
+## Safe changes
+- Inspect the current file and its callers before editing. Make the smallest change that meets the request.
+- Do not replace the website with a framework or copy the template project wholesale.
+- Do not overwrite .github/workflows/main.yml. It generates ebooks/catalogue.json when PDF books change. Add separate workflows for separate checks.
+- Keep the site mobile-friendly, accessible, and usable with keyboard navigation. Use semantic HTML, visible labels, alt text, and clear focus states.
+- Keep existing school content, navigation and working forms unless the user explicitly requests a change.
+- Do not invent school policies, staff details, dates, contact information, or facilities. Flag uncertain facts for confirmation.
+- Never put API keys, SMS credentials, database secrets, OTPs or private student information in source code, HTML, commits or public files. Use Cloudflare secrets and bindings.
+
+## Asset and path rules
+- Root-level pages can use assets/css/style.css and assets/js/main.js.
+- Pages inside subfolders must use paths that resolve correctly from that page or root-relative paths beginning with / when supported by the deployed domain.
+- Before finishing, verify that referenced local CSS and JavaScript files exist. Check important pages including index.html, pages/admission-enquiry.html and pages/feedback.html.
+- Preserve wrangler.toml's pages_build_output_dir = "." unless a tested deployment change requires otherwise.
+
+## Testing and delivery
+- After changing a page, check its stylesheet and script paths, links to important pages, responsive behavior, and browser console errors when browser testing is available.
+- For deployment-related issues, distinguish GitHub source files from the actual Cloudflare deployment. A successful build does not prove all expected assets were published.
+- Explain which files changed and how to verify the result. Do not claim a deployment or test succeeded unless it was checked.

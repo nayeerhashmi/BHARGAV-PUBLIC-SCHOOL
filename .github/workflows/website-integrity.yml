@@ -1,0 +1,78 @@
+name: Website Integrity Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-website-files:
+    name: Check required website files and shared assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate key pages and shared assets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          root = Path(".")
+          required = [
+              "index.html",
+              "assets/css/style.css",
+              "assets/js/main.js",
+              "bhargav-logo.png",
+              "pages/admission-enquiry.html",
+              "pages/feedback.html",
+              "pages/calendar/index.html",
+              "ebooks/catalogue.json",
+              "wrangler.toml",
+          ]
+          errors = []
+
+          for item in required:
+              if not (root / item).is_file():
+                  errors.append(f"Missing required file: {item}")
+
+          config = (root / "wrangler.toml")
+          if config.is_file() and 'pages_build_output_dir = "."' not in config.read_text(encoding="utf-8"):
+              errors.append('wrangler.toml must keep pages_build_output_dir = "." for the current root-based Pages deployment.')
+
+          # Check shared CSS/JS references on key pages. Resolve root-relative
+          # references from the repository root and ordinary relative paths
+          # from the page's own directory.
+          for page_name in ["index.html", "pages/admission-enquiry.html", "pages/feedback.html"]:
+              page = root / page_name
+              if not page.is_file():
+                  continue
+              html = page.read_text(encoding="utf-8", errors="replace")
+              if "assets/css/style.css" not in html:
+                  errors.append(f"{page_name} does not reference the shared stylesheet.")
+              if "assets/js/main.js" not in html:
+                  errors.append(f"{page_name} does not reference the shared JavaScript.")
+              for attr, pattern in [("stylesheet", r'<link\b[^>]*href=["\']([^"\']+\.css(?:\?[^"\']*)?)["\']'), ("script", r'<script\b[^>]*src=["\']([^"\']+\.js(?:\?[^"\']*)?)["\']')]:
+                  for raw in re.findall(pattern, html, flags=re.IGNORECASE):
+                      path = raw.split("?", 1)[0]
+                      if path.startswith(("https://", "http://", "//", "data:")):
+                          continue
+                      target = root / path.lstrip("/") if path.startswith("/") else page.parent / path
+                      if not target.is_file():
+                          errors.append(f"{page_name} has a missing local {attr}: {raw}")
+
+          if errors:
+              print("Website integrity check failed:")
+              for error in errors:
+                  print(f" - {error}")
+              sys.exit(1)
+
+          print("Website integrity check passed. Required pages and shared assets are present.")
+          PY
